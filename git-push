@@ -5,4 +5,7 @@ then
 	git commit -m "$2"
 	git push origin main
 fi
-echo "Usage: <script> <what-to-commit> <commit-message>"
+if [ $# -ne 2 ]
+then
+	echo "Usage: <script> <what-to-commit> <commit-message>"
+fi
