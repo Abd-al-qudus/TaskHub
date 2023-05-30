@@ -1,14 +1,14 @@
-# from taskhub import db
+from taskhub import db
 # from flask_login import UserMixin
 # from sqlalchemy import Column, String, Integer
 
-# class User(UserMixin, db.Model):
-#     __tablename__ = 'user'
+class Task(db.Model):
+    __tablename__ = 'Task'
     
-#     id = Column(Integer, primary_key=True)
-#     username = Column(String(80), unique=True, nullable=False)
-#     email = Column(String(100), unique=True, nullable=False)
-#     password = Column(String(120), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), unique=True, nullable=False)
+    description = db.Column(db.String(120), unique=True, nullable=False)
+    team_id = db.Column(db.String(120), unique=True, nullable=False)
     
-#     def __repr__(self) -> str:
-#         return "<User %r" %self.username
+    def __repr__(self) -> str:
+        return "<Task %r" %self.title
