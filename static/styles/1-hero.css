@@ -36,20 +36,15 @@ body {
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background-color: #800000;
     bottom: -100px;
     color: whitesmoke;
     flex-direction: column;
     justify-content: right;
+    background: linear-gradient(180deg, #800000 -28.35%, rgba(255,0,0,0) 153.96%);
+    border: 1px slid whitesmoke;
       
       
       
-}
-.circle > div{
-    
-    margin-top: 100px;
-    margin-right: 200px;
-    font-weight: bold;
 }
 
 
