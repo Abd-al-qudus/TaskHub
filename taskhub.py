@@ -45,7 +45,6 @@ app = create_app()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub.db' 
 db = SQLAlchemy(app)
 
-
 @app.route('/')
 def home():
     return render_template('3-feature.html')
