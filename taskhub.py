@@ -42,8 +42,11 @@ def create_app():
     return app
 
 app = create_app()  
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub.db' 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub_db' 
 db = SQLAlchemy(app)
+
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def home():
