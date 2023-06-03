@@ -3,10 +3,13 @@ from werkzeug.security import (
     generate_password_hash,
     check_password_hash
 )
+from sqlalchemy.ext.declarative import declarative_base
 # from flask_login import UserMixin
 # from sqlalchemy import Column, String, Integer
 
-class Task(db.Model):
+Base = declarative_base()
+
+class Task(db.Model, Base):
     __tablename__ = 'task'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +20,7 @@ class Task(db.Model):
     def __repr__(self):
         return self.title
 
-class User(db.Model):
+class User(db.Model, Base):
     __tablename__ = 'user'
     
     id = db.Column(db.Integer, primary_key=True)

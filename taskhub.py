@@ -6,6 +6,7 @@ from flask import (
     url_for,
 )
 from flask_sqlalchemy import SQLAlchemy
+from api.databases import create_db_session
 
 # from flask_migrate import Migrate
 # from flask_bcrypt import Bcrypt
@@ -48,6 +49,7 @@ def create_app():
     return app
 
 app = create_app()  
+app.secret_key = 'gonna change this'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub_db' 
 db = SQLAlchemy(app)
 
@@ -57,8 +59,12 @@ with app.app_context():
     db.create_all()
 
 @app.route('/')
-def home():
+def index():
     return render_template('login.html')
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -80,7 +86,8 @@ def login():
         username =  request.form['username']
         password = request.form['password']
         
-        user = db.Query(User).filter_by(username=username).first()
+        db_users = create_db_session()
+        user = db_users.query(User).filter_by(username=username).first()
         if user and user.verify_password(password):
             return redirect(url_for('home'))
         
