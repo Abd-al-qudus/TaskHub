@@ -1,6 +1,12 @@
-from flask import Flask
-from flask import render_template
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+)
 from flask_sqlalchemy import SQLAlchemy
+
 # from flask_migrate import Migrate
 # from flask_bcrypt import Bcrypt
 # from flask_login import (
@@ -45,12 +51,41 @@ app = create_app()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub_db' 
 db = SQLAlchemy(app)
 
+from api.models import User
+
 with app.app_context():
     db.create_all()
 
 @app.route('/')
 def home():
-    return render_template('3-feature.html')
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        new_user = User(username=username)
+        new_user.password = password
+        
+        db.session.add(new_user)
+        db.session.commit()
+        
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username =  request.form['username']
+        password = request.form['password']
+        
+        user = db.Query(User).filter_by(username=username).first()
+        if user and user.verify_password(password):
+            return redirect(url_for('home'))
+        
+    return render_template('login.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
