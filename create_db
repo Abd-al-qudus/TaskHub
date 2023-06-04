@@ -1,0 +1,2 @@
+#!/bin/bash
+cat set_up_database.sql | sudo mysql -uroot -p

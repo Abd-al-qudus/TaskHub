@@ -1,43 +1,49 @@
-from taskhub import db
 from werkzeug.security import (
     generate_password_hash,
     check_password_hash
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, ForeignKey, String
 
 Base = declarative_base()
 
-class Task(db.Model, Base):
+class Task(Base):
     __tablename__ = 'task'
     
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
-    team_id = db.Column(db.String(80), db.ForeignKey('team.id'), unique=True)
+    id = Column(Integer, primary_key=True)
+    title = Column(String(80), unique=True, nullable=False)
+    description = Column(String(500), unique=True, nullable=False)
+    user_id = Column(String(80), ForeignKey('user.id'))
+    
+    team = relationship('Team', backref='task', cascade='all, delete')
+    team_member = relationship('TeamMember', backref='task', cascade='all, delete')
     
     def __repr__(self):
         return self.title
     
-class TeamMember(db.Model, Base):
+class TeamMember(Base):
     __tablename__ = 'team_member'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(80), unique=True, nullable=False)
+    id = Column(Integer, primary_key=True)
+    task_id = Column(Integer, ForeignKey('task.id'))
+    name = Column(String(80), nullable=False, unique=True)
     
-class Team(db.Model, Base):
+class Team(Base):
     __tablename__ = 'team'
     
-    id = db.Column(db.Integer, primary_key=True)
-    task_title = db.Column(db.String(80), unique=True, nullable=False)
-    member = db.Column(db.String(80), db.ForeignKey('team_member.user_id'))
-    task = relationship('Task', cascade='delete', backref='team')
+    id = Column(Integer, primary_key=True)
+    task_title = Column(String(80), unique=True, nullable=False)
+    task_id = Column(Integer, ForeignKey('task.id'))
+    team_name = Column(String(80), nullable=False, unique=True)
 
-class User(db.Model, Base):
+class User(Base):
     __tablename__ = 'user'
     
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
+    id = Column(Integer, primary_key=True)
+    username = Column(String(80), unique=True, nullable=False)
+    password_hash = Column(String(120), nullable=False)
+    
+    task = relationship('Task', backref='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
