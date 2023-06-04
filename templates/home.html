@@ -29,12 +29,18 @@
         </nav>
     </header>
 
+    <script>
+      function redirectToTaskManager(){
+        window.location.href = "{{ url_for('task_manager')}}";
+      }
+    </script>
+
     <section class="hero">
 
         <div class="hero-content">
           <h1>Welcome to TaskHub</h1> <!-- Heading for hero section -->
           <p>A simple and intuitive project management tool for individuals and teams.<br></p> <!-- Description for hero section -->
-          <button hrf="#projects" class="btn">Get Started</button> <!-- Button for getting started in hero section -->
+          <button onclick="redirectToTaskManager()" class="btn">Your Projects</button> <!-- Button for getting started in hero section -->
         </div>
 
         <div class="circle"> </div>
