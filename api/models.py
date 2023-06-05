@@ -14,9 +14,9 @@ class Task(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(80), unique=True, nullable=False)
     description = Column(String(500), unique=True, nullable=False)
-    user_id = Column(String(80), ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
     
-    team = relationship('Team', backref='task', cascade='all, delete')
+    # team = relationship('Team', backref='task', cascade='all, delete')
     team_member = relationship('TeamMember', backref='task', cascade='all, delete')
     
     def __repr__(self):
@@ -26,15 +26,17 @@ class TeamMember(Base):
     __tablename__ = 'team_member'
     id = Column(Integer, primary_key=True)
     task_id = Column(Integer, ForeignKey('task.id'))
-    name = Column(String(80), nullable=False, unique=True)
+    user_id = Column(Integer, nullable=False)
+    name = Column(String(80), nullable=False)
     
-class Team(Base):
-    __tablename__ = 'team'
     
-    id = Column(Integer, primary_key=True)
-    task_title = Column(String(80), unique=True, nullable=False)
-    task_id = Column(Integer, ForeignKey('task.id'))
-    team_name = Column(String(80), nullable=False, unique=True)
+# class Team(Base):
+#     __tablename__ = 'team'
+    
+#     id = Column(Integer, primary_key=True)
+#     task_title = Column(String(80), unique=True, nullable=False)
+#     task_id = Column(Integer, ForeignKey('task.id'))
+#     team_name = Column(String(80), nullable=False, unique=True)
 
 class User(Base):
     __tablename__ = 'user'
