@@ -4,9 +4,13 @@ from werkzeug.security import (
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import (
+    Column, 
+    Integer, 
+    ForeignKey, String, text)
 
 Base = declarative_base()
+
 
 class Task(Base):
     __tablename__ = 'task'
@@ -15,6 +19,7 @@ class Task(Base):
     title = Column(String(80), unique=True, nullable=False)
     description = Column(String(500), unique=True, nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
+    team_name = Column(String(80), nullable=False, unique=True)
     
     # team = relationship('Team', backref='task', cascade='all, delete')
     team_member = relationship('TeamMember', backref='task', cascade='all, delete')
@@ -27,7 +32,8 @@ class TeamMember(Base):
     id = Column(Integer, primary_key=True)
     task_id = Column(Integer, ForeignKey('task.id'))
     user_id = Column(Integer, nullable=False)
-    name = Column(String(80), nullable=False)
+    team_name = Column(String(120), nullable=False)
+    task_name = Column(String(120), nullable=False)
     
     
 # class Team(Base):
@@ -41,7 +47,8 @@ class TeamMember(Base):
 class User(Base):
     __tablename__ = 'user'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True,
+                server_default=text("(SELECT COALESCE(MAX(id), 0) + 1 FROM user)"))
     username = Column(String(80), unique=True, nullable=False)
     password_hash = Column(String(120), nullable=False)
     
