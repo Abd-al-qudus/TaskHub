@@ -6,7 +6,9 @@ from flask import (
     url_for,
 )
 from flask_sqlalchemy import SQLAlchemy
-from api.databases import DatabaseOperation
+from flask_migrate import Migrate
+from api.databases import DatabaseOperation, UserDatabaseOperation
+from api.models import User
 
 def create_app():
     app = Flask(__name__)
@@ -16,9 +18,9 @@ app = create_app()
 app.secret_key = 'gonna change this'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub_db' 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 dbOps = DatabaseOperation()
-
-from api.models import User
+userDb = UserDatabaseOperation()
 
 with app.app_context():
     db.create_all()
@@ -40,8 +42,7 @@ def register():
         new_user = User(username=username)
         new_user.password = password
         
-        db.session.add(new_user)
-        db.session.commit()
+        userDb.add_user(new_user)
         
     return render_template('register.html')
 
@@ -51,8 +52,7 @@ def login():
         username =  request.form['username']
         password = request.form['password']
         
-        db_users = dbOps.create_db_session()
-        user = db_users.query(User).filter_by(username=username).first()
+        user = userDb.get_user(usrname=username)
         if user and user.verify_password(password):
             return redirect(url_for('home'))
         
@@ -61,6 +61,11 @@ def login():
 @app.route('/task_manager')
 def task_manager():
     return render_template('task_manager.html')
+
+@app.route('/admin')
+def admin():
+    get_all_users = UserDatabaseOperation().get_user()
+    return render_template('admin.html', users=get_all_users)
 
 
 if __name__ == "__main__":

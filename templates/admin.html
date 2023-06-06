@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <h1>Admin Page</h1>
+    </head>
+    <body>
+        <p>Available Users</p>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">USERNAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
