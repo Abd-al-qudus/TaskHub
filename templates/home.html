@@ -11,6 +11,11 @@
 </head>
 <body>
     <header>
+      <script>
+        function redirectToRegister(){
+          window.location.href = "{{ url_for('register')}}";
+        }
+      </script>
         <nav>
             <h2 class="logo">Task<span>Hub</span></h2> <!-- Logo for TaskHub -->
             <ul class="nav-links">
@@ -19,7 +24,7 @@
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">About</a></li>
             </ul>
-            <button type="button" >Get Started</button> <!-- Button for getting started -->
+            <button type="button" onclick="redirectToRegister()">Get Started</button> <!-- Button for getting started -->
 
             <div class="hamburger" onclick="toggleMenu()"> <!-- Hamburger menu for mobile navigation -->
                 <div class="line"></div>

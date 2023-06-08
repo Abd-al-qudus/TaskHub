@@ -8,7 +8,8 @@ from sqlalchemy import (
     Column, 
     Integer, 
     ForeignKey, 
-    String)
+    String,
+    Boolean)
 
 from flask_login import UserMixin
 
@@ -23,6 +24,7 @@ class Task(Base):
     description = Column(String(500), unique=True, nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     team_name = Column(String(80), nullable=False, unique=True)
+    status = Column(Boolean, nullable=False)
     
     # team = relationship('Team', backref='task', cascade='all, delete')
     team_member = relationship('TeamMember', backref='task', cascade='all, delete')

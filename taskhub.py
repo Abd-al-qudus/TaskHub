@@ -1,5 +1,6 @@
 from flask import (
     Flask,
+    flash,
     render_template,
     request,
     redirect,
@@ -47,10 +48,9 @@ dbOps = DatabaseOperation()
 userDb = UserDatabaseOperation()
 
 @app.route('/')
-def index():
-    return render_template('register.html')
-
 @app.route('/home')
+# def index():
+#     return render_template('home.html')
 def home():
     return render_template('home.html')
 
@@ -58,29 +58,36 @@ def home():
 def register():
     form = register_form()
     if form.validate_on_submit():
-        email = form.email.data
+        user_email = form.email.data
         pwd = form.pwd.data
         username = form.username.data
-        new_user = User(username=username, email=email)
+        new_user = User(username=username, user_email=user_email)
         new_user.password = pwd
-        userDb.add_user(new_user)
-        return redirect(url_for('login'))
+        try:
+            userDb.add_user(new_user)
+            flash(f"Account Succesfully created", "success")
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+            flash(f"Account exist", "success")
     
     return render_template('register.html', form=form)
         
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    login_form = login_form()
-    if request.method == 'POST':
-        username =  request.form['username']
-        password = request.form['password']
-        
-        user = userDb.get_user(usrname=username)
-        if user and user.verify_password(password):
-            return redirect(url_for('home'))
-        
-    return render_template('login.html')
+    form = login_form()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.pwd.data
+        try:
+            user = userDb.get_user(usrname=username)
+            if user and user.verify_password(password=password):
+                return redirect('home')
+        except:
+            db.session.rollback()
+            flash(f"Invalid Login Parameters", "success")      
+    return render_template('login.html', form=form)
 
 @app.route('/task_manager')
 def task_manager():

@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% block content%}
+
 <div class="container">
     <div class="row mt-4">
         <div class="col-lg-5 col-md-6 m-auto card p-4">
             <form action="{{ request.path }}" method="POST" class="card-body">
+                {{ form.csrf_token }}
 
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
                 <div class="text-center">
-                    <h2>User Authentication in Flask</h2>
+                    <h2>Sign Up</h2>
                 </div>
                 
                 <div class="form-group mb-3">
@@ -22,6 +34,16 @@
                 <div class="form-group mb-3">
                     {{ form.cpwd(class_="form-control",placeholder="Confirm Password")}}
                 </div>
+                <div class="text-center">
+                    <a>
+                        {{ form.submit(class_="btn btn-primary", value="Register now") }}
+                    </a>
+                    <a>
+                        <a href="{{url_for('login')}}">Login instead</a>
+                    </a>
+
+                </div>
+                
             </form>
         </div>
     </div>

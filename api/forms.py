@@ -8,16 +8,17 @@ from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired, Length, EqualTo, Email, Regexp ,Optional
 from flask_login import current_user
 from wtforms import ValidationError,validators
-from api.models import User
+from api.databases import UserDatabaseOperation
 
-
+userDb = UserDatabaseOperation()
 class login_form(FlaskForm):
-    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    username = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
     pwd = PasswordField(validators=[InputRequired(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
     username = StringField(
-        validators=[Optional()]
+        validators=[InputRequired()]
     )
+    submit = SubmitField('Login')
 
 
 class register_form(FlaskForm):
@@ -41,13 +42,13 @@ class register_form(FlaskForm):
             EqualTo("pwd", message="Passwords must match !"),
         ]
     )
-    submit = SubmitField('Register now')
+    submit = SubmitField('Login')
 
 
     def validate_email(self, email):
-        if User.query.filter_by(email=email.data).first():
+        if userDb.get_user(usrname=email.data):
             raise ValidationError("Email already registered!")
 
     def validate_uname(self, username):
-        if User.query.filter_by(username=username.data).first():
+        if userDb.get_user(username=username.data):
                 raise ValidationError("Username already taken!")
