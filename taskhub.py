@@ -58,17 +58,16 @@ def home():
 def register():
     form = register_form()
     if form.validate_on_submit():
-        user_email = form.email.data
         pwd = form.pwd.data
         username = form.username.data
-        new_user = User(username=username, user_email=user_email)
+        new_user = User(username=username)
         new_user.password = pwd
         try:
             userDb.add_user(new_user)
             flash(f"Account Succesfully created", "success")
             return redirect(url_for('login'))
         except:
-            db.session.rollback()
+            userDb.create_db_session().rollback()
             flash(f"Account exist", "success")
     
     return render_template('register.html', form=form)
@@ -83,9 +82,9 @@ def login():
         try:
             user = userDb.get_user(usrname=username)
             if user and user.verify_password(password=password):
-                return redirect('home')
+                return redirect(url_for('home'))
         except:
-            db.session.rollback()
+            userDb.create_db_session().rollback()
             flash(f"Invalid Login Parameters", "success")      
     return render_template('login.html', form=form)
 

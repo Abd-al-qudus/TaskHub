@@ -54,7 +54,7 @@ class User(UserMixin, Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(80), unique=True, nullable=False)
-    user_email = Column(String(100), unique=True, nullable=False)
+    # user_email = Column(String(100), unique=True, nullable=False)
     password_hash = Column(String(200), nullable=False)
     
     task = relationship('Task', backref='user', cascade='all, delete-orphan')
