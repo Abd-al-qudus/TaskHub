@@ -8,7 +8,10 @@ from sqlalchemy import (
     Column, 
     Integer, 
     ForeignKey, 
-    String)
+    String,
+    Boolean)
+
+from flask_login import UserMixin
 
 Base = declarative_base()
 
@@ -21,6 +24,7 @@ class Task(Base):
     description = Column(String(500), unique=True, nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     team_name = Column(String(80), nullable=False, unique=True)
+    status = Column(Boolean, nullable=False)
     
     # team = relationship('Team', backref='task', cascade='all, delete')
     team_member = relationship('TeamMember', backref='task', cascade='all, delete')
@@ -45,12 +49,13 @@ class TeamMember(Base):
 #     task_id = Column(Integer, ForeignKey('task.id'))
 #     team_name = Column(String(80), nullable=False, unique=True)
 
-class User(Base):
+class User(UserMixin, Base):
     __tablename__ = 'user'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(80), unique=True, nullable=False)
-    password_hash = Column(String(120), nullable=False)
+    # user_email = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(200), nullable=False)
     
     task = relationship('Task', backref='user', cascade='all, delete-orphan')
 
