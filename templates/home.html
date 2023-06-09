@@ -7,20 +7,25 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/1-hero.css') }}"> <!-- Link to hero section styles -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/2-project.css') }}"> <!-- Link to project section styles -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/3-feature.css') }}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
+    
     <title>Document</title>
+
 </head>
 <body>
     <header>
+
+      
       <script>
         function redirectToRegister(){
-          window.location.href = "{{ url_for('register')}}";
+          window.location.href = "url_for('register')";
         }
       </script>
         <nav>
             <h2 class="logo">Task<span>Hub</span></h2> <!-- Logo for TaskHub -->
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
-                <li><a href="#">News</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">About</a></li>
             </ul>
@@ -36,7 +41,7 @@
 
     <script>
       function redirectToTaskManager(){
-        window.location.href = "{{ url_for('task_manager')}}";
+        window.location.href = "{{ url_for('register')}}";
       }
     </script>
 
@@ -60,20 +65,57 @@
     
     
     <section class="feature">
-      <div>
-        <h2> Management Made Easy</h2><br>
       
-        <ul>
-          <li>Add tasks with descriptions, due dates, and priority levels</li><br>
-          <li>Edit task details and mark tasks as complete.</li><br>
-          <li>Remove tasks that are no longer needed.</li><br>
+
+      <div>
         
-        </ul>
+         <div id="task_d" style="width: 50px; height: 300px;"> <h2>Task managementmade simple</h2>
+        
+          <p id="task_p">Add Task</p>
+          <p id="task_p">Update Task</p>
+          <p id="task_p">Delete Task</p>
+          
+        </div>
+
       </div>
+
       <div >
         <img src="{{ url_for('static', filename = 'images/task2 (2).jpg') }}" alt="task">
       </div>
     </section>
+
+    
+    <footer>
+
+      <div class="footer-content">
+          
+          <h3>Qudus Pls Join frontend</h3>
+          <p>This is for personal and team that want to manage their task efficiently.</p>
+
+          <ul class="socials">
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+              <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+           </ul>
+           
+      </div>
+
+      <div class="footer-bottom">
+          <p>copyright &copy;2023 <a href="#">TaskHub</a>  </p>
+       </div>
+
+       <div class="footer-menu">
+          <ul class="f-menu">
+             <li><a href="#">Home</a></li>
+             <li><a href="#">About</a></li>
+             <li><a href="#">Contact</a></li>
+          
+          </ul>
+         </div>
+
+  </footer>
     
 </body>
 </html>
