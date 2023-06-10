@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/1-hero.css"> <!-- Link to hero section styles -->
-    <link rel="stylesheet" type="text/css" href="styles/2-project.css"> <!-- Link to project section styles -->
-    <link rel="stylesheet" type="text/css" href="styles/3-feature.css">
+    <link rel="stylesheet" type="text/css" href="/TaskHub/static/styles/1-hero.css"> <!-- Link to hero section styles -->
+    <link rel="stylesheet" type="text/css" href="/TaskHub/static/styles/2-project.css"> <!-- Link to project section styles -->
+    <link rel="stylesheet" type="text/css" href="/TaskHub/static/styles/3-feature.css">
     <title>Document</title>
 </head>
 <body>
     <header>
+
+      
+      <script>
+        function redirectToRegister(){
+          window.location.href = "url_for('register')";
+        }
+      </script>
         <nav>
             <h2 class="logo">Task<span>Hub</span></h2> <!-- Logo for TaskHub -->
             <ul class="nav-links">
@@ -19,7 +26,7 @@
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">About</a></li>
             </ul>
-            <button type="button" >Get Started</button> <!-- Button for getting started -->
+            <button type="button" onclick="redirectToRegister()">Get Started</button> <!-- Button for getting started -->
 
             <div class="hamburger" onclick="toggleMenu()"> <!-- Hamburger menu for mobile navigation -->
                 <div class="line"></div>
@@ -29,107 +36,80 @@
         </nav>
     </header>
 
+    <script>
+      function redirectToTaskManager(){
+        window.location.href = "url_for('task_manager')";
+      }
+    </script>
+
     <section class="hero">
 
         <div class="hero-content">
           <h1>Welcome to TaskHub</h1> <!-- Heading for hero section -->
-          <p>A simple and intuitive project management tool for individuals and teams.<br></p> <!-- Description for hero section -->
-          <button hrf="#projects" class="btn">Get Started</button> <!-- Button for getting started in hero section -->
+          <p>A simple and intuitive projct management tool for individuals and teams.<br></p> <!-- Description for hero section -->
+          <button onclick="redirectToTaskManager()" class="btn">Your Projects</button> <!-- Button for getting started in hero section -->
         </div>
 
         <div class="circle"> </div>
 
         <div class="row img-content">
-            <img src="images/task1 (2).jpg" alt=""> <!-- Image in the row -->
+            <img src="/TaskHub/static/images/task2 (1).jpg" alt=""> <!-- Image in the row -->
         </div>
         
     </section>
-    <h2 style="color: white; font-size: 50px;">Explore popular projects</h2>
+
 
     
-
-    <section class="projec-s">
-      
-        <div class="responsive">
-            <div class="gallery">
-              <a target="_blank" href="images/IMG_0267.JPG">
-                <img src="images/cl gtl.jpg" alt="Cinque Terre" width="600" height="400">
-              </a>
-              <div class="desc">
-                <h2>site design</h2> 
-                <p>This sight was created using css, html, javacript and tailwind</html></p><br>
-                <p><span style="font-weight: bold;">ACCOUNT</span> : Amadu Hamza</p>
-            
-              
-              </div>
-            </div>
-        </div>
-          
-          
-          <div class="responsive">
-            <div class="gallery">
-              <a target="_blank" href="images/IMG_5133.JPG">
-                <img src="images/IMG_5133.JPG" alt="Forest" width="600" height="400">
-              </a>
-              <div class="desc">
-                <h2>site design</h2> 
-                <p>This sight was created using css, html, javacript and tailwind</html></p><br>
-                <p><span style="font-weight: bold;">ACCOUNT</span> : Amadu Hamza</p>
-            
-              
-              </div>
-            </div>
-          </div>
-          
-          <div class="responsive">
-            <div class="gallery">
-              <a target="_blank" href="images/WhatsApp Image 2022-08-18 at 2.14.14 PM (1).jpeg">
-                <img src="images/WhatsApp Image 2022-08-18 at 2.14.14 PM (1).jpeg" alt="Northern Lights" width="600" height="400">
-              </a>
-              <div class="desc">
-                <h2>site design</h2> 
-                <p>This sight was created using css, html, javacript and tailwind</html></p><br>
-                <p><span style="font-weight: bold;">ACCOUNT</span> : Amadu Hamza</p>
-            
-              </div>
-            </div>
-          </div>
-          
-          <div class="responsive">
-            <div class="gallery">
-              <a target="_blank" href="filename = 'images/IMG_5133.JPG">
-                <img src="images/IMG_5133.JPG" alt="Mountains" width="600" height="400">
-              </a>
-              <div class="desc">
-                <h2>site design</h2> 
-                <p>This sight was created using css, html, javacript and tailwind</html></p><br>
-                <p><span style="font-weight: bold;">ACCOUNT</span> : Amadu Hamza</p>
-            
-              
-              </div>
-            </div>
-          </div>
-          
-          <div class="clearfix"></div>
-
-    </section>
     
     <section class="feature">
-      <div>
-        <h2> Management Made Easy</h2><br>
       
-        <ul>
-          <li>Add tasks with descriptions, due dates, and priority levels</li><br>
-          <li>Edit task details and mark tasks as complete.</li><br>
-          <li>Remove tasks that are no longer needed.</li><br>
+
+      <div>
         
-        </ul>
+         <div id="task_d" style="width: 50px; height: 300px;"> <h2>Task managementmade simple</h2>
+        
+          <div>ggrggrgrgrgrgrg</div>
+        </div>
+
       </div>
+
       <div >
-        <img src="images/296270475_447156827425018_8656212082197163125_n.jpg" alt="task">
+        <img src="/TaskHub/static/images/task2 (2).jpg" alt="task">
       </div>
     </section>
+
+    
+    <footer>
+
+      <div class="footer-content">
+          
+          <h3>Qudus Pls Join frontend</h3>
+          <p>This my footer di333333 slow.</p>
+
+          <ul class="socials">
+              <li><a href="#"><i class="fa fa-facebook">twitter</i></a></li>
+              <li><a href="#"><i class="fa fa-twitter">twitter</i></a></li>
+              <li><a href="#"><i class="fa fa-google-plus">twitter</i></a></li>
+              <li><a href="#"><i class="fa fa-youtube">twitter</i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin-square">twitter</i></a></li>
+           </ul>
+           
+      </div>
+
+      <div class="footer-bottom">
+          <p>copyright &copy;2023 <a href="#">Qudus Pls Join frontend</a>  </p>
+       </div>
+
+       <div class="footer-menu">
+          <ul class="f-menu">
+             <li><a href="#">Home</a></li>
+             <li><a href="#">About</a></li>
+             <li><a href="#">Contact</a></li>
+             <li><a href="#">Blog</a></li>
+          </ul>
+         </div>
+
+  </footer>
     
 </body>
 </html>
-S
