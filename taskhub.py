@@ -49,6 +49,7 @@ userDb = UserDatabaseOperation()
 
 @app.route('/')
 @app.route('/home')
+@login_required
 # def index():
 #     return render_template('home.html')
 def home():
@@ -82,6 +83,7 @@ def login():
         try:
             user = userDb.get_user(usrname=username)
             if user and user.verify_password(password=password):
+                login_user(user=user)
                 return redirect(url_for('home'))
         except:
             userDb.create_db_session().rollback()
@@ -89,17 +91,25 @@ def login():
     return render_template('login.html', form=form)
 
 @app.route('/task_manager')
+@login_required
 def task_manager():
     return render_template('task_manager.html')
 
 @app.route('/admin')
+@login_required
 def admin():
     get_all_users = UserDatabaseOperation().get_user()
     return render_template('admin.html', users=get_all_users)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.query(User).filter(user_id == User.id).first()
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":

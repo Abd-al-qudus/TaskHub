@@ -19,7 +19,7 @@
       
       <script>
         function redirectToRegister(){
-          window.location.href = "url_for('register')";
+          window.location.href = "{{ url_for('register') }}";
         }
       </script>
         <nav>
@@ -28,6 +28,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">About</a></li>
+                <li><a href="{{ url_for('logout') }}">LogOut</a></li>
             </ul>
             <button type="button" onclick="redirectToRegister()">Get Started</button> <!-- Button for getting started -->
 
@@ -41,7 +42,7 @@
 
     <script>
       function redirectToTaskManager(){
-        window.location.href = "{{ url_for('register')}}";
+        window.location.href = "{{ url_for('task_manager')}}";
       }
     </script>
 

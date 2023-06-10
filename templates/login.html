@@ -29,7 +29,13 @@
                 </div>
             
                 <div class="text-center">
-                    {{ form.submit(class_="btn btn-primary", value="Login") }}
+                    <a>
+                        {{ form.submit(class_="btn btn-primary", value="Login") }}
+                    </a>
+                    <a>
+                        <a href="{{url_for('register') }}">Sign up</a>
+                    </a>
+
                 </div>
             </form>
         </div>
