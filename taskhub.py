@@ -68,7 +68,7 @@ def register():
             return redirect(url_for('login'))
         except:
             userDb.create_db_session().rollback()
-            flash(f"Account exist", "success")
+            flash(f"Account exist", "warning")
     
     return render_template('register.html', form=form)
         
@@ -85,7 +85,7 @@ def login():
                 return redirect(url_for('home'))
         except:
             userDb.create_db_session().rollback()
-            flash(f"Invalid Login Parameters", "success")      
+            flash(f"Invalid Login Parameters", "danger")      
     return render_template('login.html', form=form)
 
 @app.route('/task_manager')
