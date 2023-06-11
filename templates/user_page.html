@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/TaskHub/static/styles/user_page.css">
+    
+    <script src="/TaskHub/web_dynamic/user_page.js"></script>
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="/TaskHub/templates/home.html">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">About</a>
+    </div>
+
+    <!-- The flexible grid (content) -->
+    <div class="row">
+        <div class="side">
+        
+            <img src="/TaskHub/static/images/img_avatar.png" alt="" width="200px" height="150px">
+            <h3>Amadu Hamza</h3>
+            <p>Email: amaduhamzajaarah300@gmail.com</p>
+        </div>
+        <div class="main">
+            <h2>Task Manager</h2><br>
+            <button class="add-btn">Add new Task</button><br><br>
+
+            <form>
+                <label for="task-name">Task name</label><br>
+                <input type="text" id="task-name" name="task-name"><br>
+                <label for="task-description">Task description</label><br>
+                <input type="text" id="task-description" name="task-description"><br>
+              
+                <input type="submit" value="Create">
+            </form>
+            
+            <div id="task-container">
+                <!-- New tasks will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    background-color:   rgb(24, 22, 22);
+}
+  
+  
+  /* Style the top navigation bar */
+  .navbar {
+    display: flex;
+    background-color: #333;
+    border-bottom: 1px solid brown;
+  }
+  
+  /* Style the navigation bar links */
+  .navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  /* Change color on hover */
+  .navbar a:hover {
+    background-color: #d69b9b;
+    color: greenyellow;
+  }
+  
+  /* Column container */
+  .row {  
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* Create two unequal columns that sits next to each other */
+  /* Sidebar/left column */
+  .side {
+    flex: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;
+  }
+  
+  /* Main column */
+  .main {
+    flex: 70%;
+    background-color: white;
+    padding: 20px;
+  }
+  
+
+h1, h2 {
+    text-align: center;
+}
+
+#project-container, #task-container {
+    margin-bottom: 20px;
+}
+
+#project-list, #task-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+
+
+
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+input[type=text]{
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar a:hover {
+    background-color: #976565;
+    color: black;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.side {
+    flex: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.main {
+    flex: 70%;
+    background-color: rgb(56, 55, 55);
+    padding: 20px;
+    color: black;
+}
+
+.main h2 {
+    text-align: center;
+    color: whitesmoke;
+}
+
+.add-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+
+}
+
+form {
+    display: none;
+    margin-top: 20px;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#task-container {
+    margin-top: 20px;
+   
+    
+}
+
+.task {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    padding-left: 20px;
+    border-bottom: 5px solid brown;
+}
+
+.task h3 {
+    margin-top: 0;
+}
+
+.delete-btn,
+.edit-btn {
+    background-color: brown;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background-color: gray;
+    margin-left: 5px;
+}
+form input[type="submit"]{
+    color: white;
+    background-color:  #4CAF50;
+    border-radius: 5px;
+}
+img {
+   
+    background-position: 50% 35%;
+    border: 5px solid rgb(131, 114, 114);
+    border-radius: 40%;
+    min-width: 20%;
+}
+
+  
+  /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 700px) {
+    .row, .navbar {   
+      flex-direction: column;
+    }
+  }
