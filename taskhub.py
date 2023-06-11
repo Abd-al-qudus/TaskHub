@@ -2,18 +2,23 @@ from flask import (
     Flask,
     flash,
     render_template,
-    request,
     redirect,
     url_for,
 )
+from sqlalchemy.exc import (
+    IntegrityError,
+    DataError,
+    DatabaseError,
+    InterfaceError,
+    InvalidRequestError
+)
+from werkzeug.routing import BuildError
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_bcrypt import Bcrypt
 from api.databases import DatabaseOperation, UserDatabaseOperation
 from api.forms import login_form, register_form
 from api.models import User
-from flask_login import (
-    UserMixin, 
+from flask_login import ( 
     login_user,
     LoginManager,
     current_user,
@@ -26,14 +31,11 @@ login_manager.session_protection = "strong"
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-bcrypt = Bcrypt()
-
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'gonna change this'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://taskhub_user:taskhub_user_pwd@localhost/taskhub_db' 
     login_manager.init_app(app=app)
-    bcrypt.init_app(app=app)
     
     return app
 
@@ -50,8 +52,6 @@ userDb = UserDatabaseOperation()
 @app.route('/')
 @app.route('/home')
 @login_required
-# def index():
-#     return render_template('home.html')
 def home():
     return render_template('home.html')
 
@@ -67,9 +67,24 @@ def register():
             userDb.add_user(new_user)
             flash(f"Account Succesfully created", "success")
             return redirect(url_for('login'))
-        except:
+        except InvalidRequestError:
             userDb.create_db_session().rollback()
-            flash(f"Account exist", "warning")
+            flash(f"Something went wrong!", "danger")
+        except IntegrityError:
+            userDb.create_db_session().rollback()
+            flash(f"User already exists!.", "warning")
+        except DataError:
+            userDb.create_db_session().rollback()
+            flash(f"Invalid Entry", "warning")
+        except InterfaceError:
+            userDb.create_db_session().rollback()
+            flash(f"Error connecting to the database", "danger")
+        except DatabaseError:
+            userDb.create_db_session().rollback()
+            flash(f"Error connecting to the database", "danger")
+        except BuildError:
+            userDb.create_db_session().rollback()
+            flash(f"An error occured !", "danger")   
     
     return render_template('register.html', form=form)
         
@@ -85,9 +100,10 @@ def login():
             if user and user.verify_password(password=password):
                 login_user(user=user)
                 return redirect(url_for('home'))
-        except:
+        except Exception as e:
             userDb.create_db_session().rollback()
-            flash(f"Invalid Login Parameters", "danger")      
+            flash(f"{e}", "warning")
+         
     return render_template('login.html', form=form)
 
 @app.route('/task_manager')
@@ -110,6 +126,12 @@ def load_user(user_id):
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/user')
+@login_required
+def user():
+    if current_user.is_authenticated:
+        return render_template('user.html', users=current_user)
 
 
 if __name__ == "__main__":

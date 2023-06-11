@@ -26,7 +26,6 @@ class Task(Base):
     team_name = Column(String(80), nullable=False, unique=True)
     status = Column(Boolean, nullable=False)
     
-    # team = relationship('Team', backref='task', cascade='all, delete')
     team_member = relationship('TeamMember', backref='task', cascade='all, delete')
     
     def __repr__(self):
@@ -40,21 +39,15 @@ class TeamMember(Base):
     team_name = Column(String(120), nullable=False)
     task_name = Column(String(120), nullable=False)
     
+    def __repr__(self):
+        return self.task_name
     
-# class Team(Base):
-#     __tablename__ = 'team'
-    
-#     id = Column(Integer, primary_key=True)
-#     task_title = Column(String(80), unique=True, nullable=False)
-#     task_id = Column(Integer, ForeignKey('task.id'))
-#     team_name = Column(String(80), nullable=False, unique=True)
 
 class User(UserMixin, Base):
     __tablename__ = 'user'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(80), unique=True, nullable=False)
-    # user_email = Column(String(100), unique=True, nullable=False)
     password_hash = Column(String(200), nullable=False)
     
     task = relationship('Task', backref='user', cascade='all, delete-orphan')
@@ -69,4 +62,7 @@ class User(UserMixin, Base):
         
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+    def __repr__(self):
+        return self.username
     
