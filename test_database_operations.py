@@ -108,6 +108,34 @@ class TestDatabaseOperation(unittest.TestCase):
             user = self.userDb.get_user(usrname="bad man fist")
             self.assertIsNone(user)
         
+    def test_remove_from_db_session(self):
+        """perform delete operations on the database"""
+        # remove an existing user
+        with self.assertRaises(Exception):
+            #remove existing users
+            self.userDb.delete_user("tester")
+            self.assertEqual(self.userDb.get_user('tester'), None)
         
+            self.userDb.delete_user("testers")
+            self.assertEqual(self.userDb.get_user('testers'), None)
+        
+            self.userDb.delete_user("test")
+            self.assertEqual(self.userDb.get_user('test'), None)
+            
+            # remove non existing users
+            self.userDb.delete_user("toooooo")
+            self.assertEqual(self.userDb.get_user('toooooo'), None)
+
+            self.userDb.delete_user([])
+            self.assertEqual(self.userDb.get_user([]), None)
+            
+            self.userDb.delete_user({})
+            self.assertEqual(self.userDb.get_user({}), None)
+            
+        with self.assertRaises(Exception):
+            self.userDb.delete_user("tester")
+            self.assertEqual(self.userDb.get_user('tester'), None)    
+            
+   
 if __name__ == "__main__":
     unittest.main()
