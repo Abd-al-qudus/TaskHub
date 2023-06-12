@@ -58,7 +58,10 @@ class User(UserMixin, Base):
     
     @password.setter
     def password(self, password):
-        self.password_hash = generate_password_hash(password)
+        if isinstance(password, str):
+            self.password_hash = generate_password_hash(password)
+        else:
+            raise ValueError("Password must be a string")
         
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)

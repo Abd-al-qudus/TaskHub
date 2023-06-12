@@ -36,26 +36,35 @@ class DatabaseOperation:
     def query_db_session(self, object):
         """query the connection based on object"""
         if object:
-            session = self.create_db_session()
-            new_object = session.query(object)
-            return new_object
+            try:
+                session = self.create_db_session()
+                new_object = session.query(object)
+                return new_object
+            except Exception as e:
+                raise e
     
     def add_to_db_session(self, object):
         """add object to db session"""
         if object:
-            session = self.create_db_session()
-            if not isinstance(object, list):
-                session.add(object)
-            else:
-                session.add_all(object)
-            session.commit()
+            try:
+                session = self.create_db_session()
+                if not isinstance(object, list):
+                    session.add(object)
+                else:
+                    session.add_all(object)
+                session.commit()
+            except Exception as e:
+                raise e
         
     def remove_from_db_session(self, object):
         """remove object from db seesion"""
         if object:
-            session = self.create_db_session()
-            session.delete(object)
-            session.commit()
+            try:
+                session = self.create_db_session()
+                session.delete(object)
+                session.commit()
+            except Exception as e:
+                raise e
 
 class UserDatabaseOperation(User, DatabaseOperation):
     """perform CRUD operation on the database for user model"""
@@ -74,18 +83,20 @@ class UserDatabaseOperation(User, DatabaseOperation):
                 return self.init_user_db.filter_by(username=User.username). \
                     filter(usrname == User.username).first()
     
-    def delete_user(self, username):
+    def delete_user(self, username=""):
         """delete a user in the database"""
         if not isinstance(username, str):
             raise ValueError("Username must be a string")
         else:
-            if username:
+            if username != "":
                 user = self.get_user(usrname=username)
-                self.init_db.remove_from_db_session(user)
+                return self.init_db.remove_from_db_session(user)
             
     def add_user(self, user):
-        if user:
-            self.init_db.add_to_db_session(user)
+        if not isinstance(user, User):
+            raise ValueError("user object must be of type User")
+        else:
+            return self.init_db.add_to_db_session(user)
         
 class TaskDatabaseOperation(DatabaseOperation, Task):
     """perform CRUD operation on the database for task model"""
@@ -115,7 +126,7 @@ class TaskDatabaseOperation(DatabaseOperation, Task):
         if not isinstance(task_title, str):
             raise ValueError("Task title must be a string")
         else:
-            if task_title:
+            if task_title != "":
                 task = self.get_task(task_title=task_title)
                 self.init_db.remove_from_db_session(task)
         
@@ -124,7 +135,7 @@ class TaskDatabaseOperation(DatabaseOperation, Task):
         if not isinstance(task_title, str) or kwargs:
             raise ValueError("function arguments must be <str> <dict>")
         else:
-            if task_title:
+            if task_title != "":
                 task = self.get_task(task_title=task_title)
                 task.title = kwargs.get('title')
                 task.description = kwargs.get('description')
