@@ -33,14 +33,14 @@ class DatabaseOperation:
         """create a database connection"""
         return sessions
     
-    def queryDbSession(self, object):
+    def query_db_session(self, object):
         """query the connection based on object"""
         if object:
             session = self.create_db_session()
             new_object = session.query(object)
             return new_object
     
-    def addToDbSession(self, object):
+    def add_to_db_session(self, object):
         """add object to db session"""
         if object:
             session = self.create_db_session()
@@ -50,7 +50,7 @@ class DatabaseOperation:
                 session.add_all(object)
             session.commit()
         
-    def removeFromDbSession(self, object):
+    def remove_from_db_session(self, object):
         """remove object from db seesion"""
         if object:
             session = self.create_db_session()
@@ -61,7 +61,7 @@ class UserDatabaseOperation(User, DatabaseOperation):
     """perform CRUD operation on the database for user model"""
     
     init_db = DatabaseOperation()
-    init_user_db = init_db.queryDbSession(User)
+    init_user_db = init_db.query_db_session(User)
     
     def get_user(self, usrname=""):
         """get all users from the database"""
@@ -81,17 +81,17 @@ class UserDatabaseOperation(User, DatabaseOperation):
         else:
             if username:
                 user = self.get_user(usrname=username)
-                self.init_db.removeFromDbSession(user)
+                self.init_db.remove_from_db_session(user)
             
     def add_user(self, user):
         if user:
-            self.init_db.addToDbSession(user)
+            self.init_db.add_to_db_session(user)
         
 class TaskDatabaseOperation(DatabaseOperation, Task):
     """perform CRUD operation on the database for task model"""
     
     init_db = DatabaseOperation()
-    init_task_db = init_db.queryDbSession(Task)
+    init_task_db = init_db.query_db_session(Task)
     task_session = init_db.create_db_session()
     
     def get_task(self, task_title=""):
@@ -108,7 +108,7 @@ class TaskDatabaseOperation(DatabaseOperation, Task):
     def add_new_task(self, task):
         """add new task to the database"""
         if task:
-            self.init_db.addToDbSession(task)
+            self.init_db.add_to_db_session(task)
             
     def delete_task(self, task_title=""):
         """delete a task with task id"""
@@ -117,7 +117,7 @@ class TaskDatabaseOperation(DatabaseOperation, Task):
         else:
             if task_title:
                 task = self.get_task(task_title=task_title)
-                self.init_db.removeFromDbSession(task)
+                self.init_db.remove_from_db_session(task)
         
     def edit_task(self, task_title="", **kwargs):
         """edit task with task id"""
@@ -134,7 +134,7 @@ class TeamMemberDatabaseOperation(DatabaseOperation, TeamMember):
     """perform CRUD operation on the database for team member model"""
     
     init_db = DatabaseOperation()
-    init_team_db = init_db.queryDbSession(TeamMember)
+    init_team_db = init_db.query_db_session(TeamMember)
     
     def get_team_member(self, user_id=None, task_id=None, team_name="", task_name=""):
         """fetche team members in the database"""
@@ -152,10 +152,10 @@ class TeamMemberDatabaseOperation(DatabaseOperation, TeamMember):
     def add_new_team_member(self, team_member):
         """add a new team member"""
         if team_member:
-            self.init_db.addToDbSession(team_member)
+            self.init_db.add_to_db_session(team_member)
             
     def delete_team_member(self, team_member):
         """delete the team member"""
         if team_member:
-            self.init_db.removeFromDbSession(team_member)
+            self.init_db.remove_from_db_session(team_member)
     

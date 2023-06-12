@@ -2,6 +2,8 @@ from flask import (
     Flask,
     flash,
     render_template,
+    request,
+    jsonify,
     redirect,
     url_for,
 )
@@ -12,12 +14,6 @@ from sqlalchemy.exc import (
     InterfaceError,
     InvalidRequestError
 )
-from werkzeug.routing import BuildError
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from api.databases import DatabaseOperation, UserDatabaseOperation
-from api.forms import login_form, register_form
-from api.models import User
 from flask_login import ( 
     login_user,
     LoginManager,
@@ -25,6 +21,12 @@ from flask_login import (
     logout_user,
     login_required,
 )
+from werkzeug.routing import BuildError
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from api.databases import DatabaseOperation, UserDatabaseOperation
+from api.forms import login_form, register_form
+from api.models import User
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -106,10 +108,10 @@ def login():
          
     return render_template('login.html', form=form)
 
-@app.route('/task_manager')
-@login_required
-def task_manager():
-    return render_template('task_manager.html')
+# @app.route('/task_manager')
+# @login_required
+# def task_manager():
+#     return render_template('manager.html')
 
 @app.route('/admin')
 @login_required
@@ -131,8 +133,31 @@ def logout():
 @login_required
 def user():
     if current_user.is_authenticated:
-        return render_template('user.html', users=current_user)
+        return render_template('user_page.html', user=current_user)
 
+# ajax route for handling request
+@app.route('/store-task', methods=['POST'])
+def store_task():
+    task_name = request.form.get('name')
+    task_description = request.form.get('description')
+    print(f'name: {task_name} && desc: {task_description}')
+    
+    return jsonify({'message': 'Task data stored successfully'})
+
+@app.route('/delete-task', methods=['POST'])
+def delete_task():
+    task_id = request.form.get('id')
+    print(f"id: {task_id}")
+    
+    return jsonify({'message': 'Task data deleted successfully'})
+
+@app.route('/edit-task', methods=['POST'])
+def edit_task():
+    task_id = request.form.get('id')
+    completed = request.form.get('completed')
+    print(f"id: {task_id} && status: {completed}")
+    
+    return jsonify({'message': 'Task data updated successfully'})
 
 if __name__ == "__main__":
     app.run(debug=True)

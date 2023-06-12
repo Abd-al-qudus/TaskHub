@@ -138,7 +138,7 @@ $(document).ready(function() {
     // Function to update the task status in the database using AJAX
     function updateTaskStatus(taskId, isCompleted) {
         $.ajax({
-            url: "/update-task-status",
+            url: "/edit-task",
             method: "POST",
             data: {
                 id: taskId,
